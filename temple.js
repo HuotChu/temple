@@ -5,9 +5,9 @@
  **/
 var temple = (function() {
 
-    var re = /{{([^}]+)}}/mig;
+    var _re = /{{([^}]+)}}/mig;
 
-    var html2Dom = function(html) {
+    var _html2Dom = function(html) {
         var container = document.createElement('div');
 
         container.innerHTML = html;
@@ -17,12 +17,12 @@ var temple = (function() {
 
     var _build = function(html, dataMap, toDom) {
         if (dataMap) {
-            html = html.replace(re, function() {
+            html = html.replace(_re, function() {
                 return dataMap[RegExp.$1];
             });
         }
 
-        return toDom ? html2Dom(html) : html;
+        return toDom ? _html2Dom(html) : html;
     };
 
     var toDom = function(html, dataMap) {
