@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <div id="attachPoint"></div>
+
+    <script src="temple.js"></script>
+    <script>
+        temple.getTemplate('template.html').then(function(html) {
+            var dataMap = {
+                    divID: 'div1',
+                    divStyle: 'color: red;',
+                    divContent: 'Hello World!'
+                },
+                newDom = temple.toDom(html, dataMap);
+
+            document.getElementById('attachPoint').appendChild(newDom);
+        });
+    </script>
+</body>
+</html>
