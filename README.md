@@ -51,5 +51,11 @@ Keep application logic where it belongs by mapping variable names in a template 
             title: 'Temple Example',
             introText: 'This is really easy to use!'
         };
+        
+        temple.getTemplate('topic.html').then(function(html) {
+            var newDom = temple.toDom(html, dataMap);
+            
+            //domNode.appendChild(newDom);
+        });
 ```
 
