@@ -84,3 +84,13 @@ temple.getTemplate('innerModule').then(function(html) {
 });
 ```
 
+## The future of temple
+temple is brand new, so there are still enhancements and features to come. Current work on the project involves:
+ - Request multiple templates at once
+ - Data binding
+ - [Possible] removal of HTML single-outer-node limitation
+
+ Please report issues and leave feedback to help make temple even better!
+ If you would like to contribute to this project, simply make a pull request, then submit your changes when complete.
+
+
