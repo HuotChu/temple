@@ -11,6 +11,7 @@ Include the temple.js file ahead of any scripts which use it. This can be accomp
 
 ## Templates are HTML
 Write templates in HTML and use variables wrapped in {{double braces}} for dynamic attributes, names, and content.
+The only caveat is that the HTML must be wrapped in a single DOM element (such as the article tag in the example below). If you have a lot of HTML in a single template, simply wrap it all in a div or span to overcome this limitation.
 Here we see the contents of a template file called 'topic.html':
 ```HTML
 <article class="topic">
@@ -28,7 +29,7 @@ Here we see the contents of a template file called 'topic.html':
 temple provides a method called 'getTemplate' to import external html templates into the current context. It does this by making an XMLHttpRequest to a provided URI. temple.getTemplate() returns a promise to enable chaining requests. Alternatively, developers may choose to import the HTML string using any AJAX API.
 ```JavaScript
 temple.getTemplate('template.html').then(function(html) {
-    // Fullfill Promise to Get the template file, THEN pass HTML string to the callback
+    // Fulfill Promise to Get the template file, THEN pass HTML string to the callback
         // ... do stuff with html string such as passing to temple to convert to DOM
         // var newDom = temple.toDom(html);
 });
