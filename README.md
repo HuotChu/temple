@@ -1,7 +1,7 @@
 # temple
 Temple is a lightweight and easy to learn API for creating DOM templates in JavaScript
 
-## Setting up Temple
+## Setting up temple
 Include the temple.js file ahead of any scripts which use it. This can be accomplished by simply using a script tag with the src attribute set to 'temple.js'. Check out index.html for the 'Hello Temple!' example.
 
 ### Using a script tag
@@ -25,7 +25,7 @@ Here we see the contents of a template file called 'topic.html':
 ```
 
 ## Retrieve templates using Promises
-Temple provides a method called 'getTemplate' to import external html templates into the current context. It does this by making an XMLHttpRequest to a provided URI. temple.getTemplate() returns a promise to enable chaining requests. Alternatively, developers may choose to import the HTML string using any AJAX API.
+temple provides a method called 'getTemplate' to import external html templates into the current context. It does this by making an XMLHttpRequest to a provided URI. temple.getTemplate() returns a promise to enable chaining requests. Alternatively, developers may choose to import the HTML string using any AJAX API.
 ```JavaScript
 temple.getTemplate('template.html').then(function(html) {
     // Fullfill Promise to Get the template file, THEN pass HTML string to the callback
