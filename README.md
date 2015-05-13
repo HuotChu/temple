@@ -66,19 +66,25 @@ Keep application logic where it belongs by mapping variable names in a template 
 It is often convenient to include a template within another template (and so on). This can be accomplished by importing all of the required templates and transforming them using temple.toString(html, dataMap/*optional*/), as in the following example:
 ```JavaScript
 temple.getTemplate('innerModule').then(function(html) {
-    var innerModuleData = {prop: value},
+    var innerModuleData = {
+            prop1: value1,
+            prop2: value2
+        },
         innerModuleHtml = temple.toString(html, innerModuleData);
-        
-        temple.getTemplate('outerView').then(function(html) {
-            // outerView's template can include the innerModule template by using {{someModule}} in it's HTML
-            // and mapping the someModule variable name to the template returned by our innerModuleHtml variable
+
+        return innerModuleHtml;
+        // this return passes to chained 'then'
+}).then(function(moduleHTML) {
+        temple.getTemplate('outerView').then(function(viewTemplate) {
+            // outerView's template can include the innerModule template by using {{someModuleName}} in it's HTML
+            // and mapping the someModuleName variable to the template returned by the moduleHTML argument
             var outerViewData = {
-                    prop: value,
-                    someModule: innerModuleHtml
+                    prop1: value1,
+                    someModuleName: moduleHTML
                 },
                 // Once all templates are combined, the last call uses toDom to return DOM rather than String
                 view = temple.toDom(html, outerViewData);
-                
+                // attach the completed template to the page...
                 document.getElementById('myDiv').appendChild(view);
         });
 });
@@ -93,4 +99,4 @@ temple is brand new, so there are still enhancements and features to come. Curre
  Please report issues and leave feedback to help make temple even better!
  If you would like to contribute to this project, simply make a pull request, then submit your changes when complete.
 
-
+If you are using temple in a project, please let me know about it! I'll feature your site/app/framework on the upcoming temple home page.
