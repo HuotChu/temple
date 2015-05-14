@@ -63,36 +63,59 @@ Keep application logic where it belongs by mapping variable names in a template 
 ```
 
 ## Embed templates inside of templates
-It is often convenient to include a template within another template (and so on). This can be accomplished by importing all of the required templates and transforming them using temple.toString(html, dataMap/*optional*/), as in the following example:
+It is often convenient to include a template within another template (and so on). This can be accomplished by importing all of the required templates and transforming them using temple.toString(). The following 2 examples illustrate how to embed templates within each other. The first example uses a chained promise, while the second example requests all the templates at once!
 ```JavaScript
-temple.getTemplate('innerModule').then(function(html) {
-    var innerModuleData = {
+temple.getTemplate('module').then(function(html) {
+    var moduleData = {
             prop1: value1,
             prop2: value2
         },
-        innerModuleHtml = temple.toString(html, innerModuleData);
+        // merge template with data using toString to leave as a string for further construction...
+        moduleHtml = temple.toString(html, innerModuleData);
 
-        return innerModuleHtml;
-        // this return passes to chained 'then'
-}).then(function(moduleHTML) {
-        temple.getTemplate('outerView').then(function(viewTemplate) {
-            // outerView's template can include the innerModule template by using {{someModuleName}} in it's HTML
-            // and mapping the someModuleName variable to the template returned by the moduleHTML argument
-            var outerViewData = {
+        // return passes the html into chained 'then' argument
+        return moduleHtml;
+
+}).then(function(module) {
+        temple.getTemplate('view').then(function(viewHTML) {
+            // view's template can include the module template by using {{someModuleName}}
+            // and mapping someModuleName to the 'module' argument
+            var viewData = {
                     prop1: value1,
-                    someModuleName: moduleHTML
+                    someModuleName: module
                 },
                 // Once all templates are combined, the last call uses toDom to return DOM rather than String
-                view = temple.toDom(html, outerViewData);
+                view = temple.toDom(html, viewData);
                 // attach the completed template to the page...
                 document.getElementById('myDiv').appendChild(view);
         });
 });
 ```
 
+That's pretty cool, but what if you want to import 4, 5, 6... maybe even 10 or more templates? Each getTemplate call returns a Promise. The Promise API also provides Promise.all, which allows the developer to pass an array of Promises to be requested AT THE SAME TIME! When I say at the same time, I mean that quite literally. Usually, if you watch the Network request times for your web assets, you will see a staggered, stair-like pattern. However, when you request resources using Promise.all, the browser will actually request as many of those resources as it can simultaneously. Try this and watch the Network tab in Chrome Dev Tools. The requests form a straight line - not steps. The other great thing about requesting multiple templates using this technique is that you also get back all your templates in an array. Look at the following example:
+```JavaScript
+    // Create an array of requests
+var templateRequests = [
+    temple.getTemplate('main'),
+    temple.getTemplate('module1'),
+    temple.getTemplate('module2'),
+    temple.getTemplate('module3')
+];
+
+Promise.all(templateRequests).then(function (resultsArray) {
+        // Using variables to make the array identifiers more semantic
+    var containerPage = resultsArray[0],
+        module1_template = resultsArray[1],
+        module2_template = resultsArray[2],
+        module3_template = resultsArray[3];
+
+    // Now each template can be merged with data maps as well as being inserted into each other
+    // A good example of this in the 'app.showDiscussion' method of my forum example at line 99: https://github.com/blujagu/startupGrind/blob/master/js/app.js
+}
+```
+
 ## The future of temple
 temple is brand new, so there are still enhancements and features to come. Current work on the project involves:
- - Request multiple templates at once
  - Data binding
  - [Possible] removal of HTML single-outer-node limitation
 
