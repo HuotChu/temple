@@ -64,6 +64,7 @@ Keep application logic where it belongs by mapping variable names in a template 
 
 ## Embed templates inside of templates
 It is often convenient to include a template within another template (and so on). This can be accomplished by importing all of the required templates and transforming them using temple.toString(). The following 2 examples illustrate how to embed templates within each other. The first example uses a chained promise, while the second example requests all the templates at once!
+### Chained Request Example
 ```JavaScript
 temple.getTemplate('module').then(function(html) {
     var moduleData = {
@@ -91,7 +92,7 @@ temple.getTemplate('module').then(function(html) {
         });
 });
 ```
-
+### Request Multiple Simultaneously
 That's pretty cool, but what if you want to import 4, 5, 6... maybe even 10 or more templates? Each getTemplate call returns a Promise. The Promise API also provides Promise.all, which allows the developer to pass an array of Promises to be requested AT THE SAME TIME! When I say at the same time, I mean that quite literally. Usually, if you watch the Network request times for your web assets, you will see a staggered, stair-like pattern. However, when you request resources using Promise.all, the browser will actually request as many of those resources as it can simultaneously. Try this and watch the Network tab in Chrome Dev Tools. The requests form a straight line - not steps. The other great thing about requesting multiple templates using this technique is that you also get back all your templates in an array. Look at the following example:
 ```JavaScript
     // Create an array of requests
