@@ -83,7 +83,7 @@ temple.getTemplate('module').then(function(html) {
             // and mapping someModuleName to the 'module' argument
             var viewData = {
                     prop1: value1,
-                    someModuleName: module
+                    someModuleName: module // here we inject the 'module' template into the 'view' template
                 },
                 // Once all templates are combined, the last call uses toDom to return DOM rather than String
                 view = temple.toDom(html, viewData);
