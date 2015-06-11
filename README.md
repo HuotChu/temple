@@ -72,12 +72,12 @@ temple.getTemplate('module').then(function(html) {
             prop2: value2
         },
         // merge template with data using toString to leave as a string for further construction...
-        moduleHtml = temple.toString(html, innerModuleData);
+        moduleHtml = temple.toString(html, moduleData);
 
         // return passes the html into chained 'then' argument
         return moduleHtml;
 
-}).then(function(module) {
+}).then(function(module) { // module here is moduleHtml from above
         temple.getTemplate('view').then(function(viewHTML) {
             // view's template can include the module template by using {{someModuleName}}
             // and mapping someModuleName to the 'module' argument
