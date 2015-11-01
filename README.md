@@ -116,11 +116,4 @@ Promise.all(templateRequests).then(function (resultsArray) {
 ```
 
 ## The future of temple
-temple is brand new, so there are still enhancements and features to come. Current work on the project involves:
- - Data binding
- - [Possible] removal of HTML single-outer-node limitation
-
- Please report issues and leave feedback to help make temple even better!
- If you would like to contribute to this project, simply make a pull request, then submit your changes when complete.
-
-If you are using temple in a project, please let me know about it! I'll feature your site/app/framework on the upcoming temple home page.
+temple has evolved a great deal since this repository was created, however I am leaving it in case someone needs something really fast and light without too many bells and whistles. The new temple is part of SquareJS https://github.com/blujagu/square
